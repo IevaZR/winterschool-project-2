@@ -2,15 +2,17 @@ import { Page } from "./page.js";
 
 class CartPage extends Page {
     async open() {
-        browser.navigateTo('https://magento.softwaretestingboard.com/checkout/cart/')
+        await browser.navigateTo('https://magento.softwaretestingboard.com/checkout/cart/')
+        await expect(this.pageTitle).toHaveText("Shopping Cart");
     }
 
     get firstRemoveItemButton() { return $('.actions-toolbar [title="Remove Item"]') }
+    get pageTitle() { return $('.page-title'); }
 
     async removeAllProducts() {
         await browser.waitUntil(async () => {
             try {
-                await this.firstRemoveItemButton.waitForDisplayed()
+                await this.firstRemoveItemButton.waitForDisplayed({ timeout: 2000 })
                 await this.firstRemoveItemButton.click()
                 
                 // the element is visible
@@ -20,7 +22,7 @@ class CartPage extends Page {
                 return true
             }
 
-        })
+        }, {timeout: 30000})
     }
 }
 

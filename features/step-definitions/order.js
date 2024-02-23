@@ -36,9 +36,9 @@ When("I select size and color", async function () {
 
 When('I click the Add to Card button', async function () {
     // code for saving the product name and price
-    this.productTitle = (await productPage.productTitle).getText()
-    this.productPrice = (await productPage.productPrice).getText()
-
+    this.productTitle = await productPage.productTitle.getText()
+    this.productPrice = await productPage.productPrice.getText()
+    
     // and then we click the button
     await productPage.addToCartButton.click()
 })
@@ -76,6 +76,6 @@ Then('A correct order information is displayed', async function () {
     await expect(orderPage.subTotal).toHaveText(this.productPrice)
     await expect(orderPage.shippingPrice).toHaveText(this.shippingPrice)
 
-    const expectedGrandTotal = priceStringToNumber(await orderPage.subTotal) + priceStringToNumber(await orderPage.shippingPrice)
+    const expectedGrandTotal = priceStringToNumber(await orderPage.subTotal.getText()) + priceStringToNumber(await orderPage.shippingPrice.getText())
     await expect(orderPage.grandTotal).toHaveText(`$${expectedGrandTotal.toFixed(2)}`)
 });

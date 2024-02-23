@@ -3,6 +3,7 @@ import { Page } from "./page.js";
 class ProductPage extends Page {
   get productTitle() {
     return $(".page-title span");
+    
   }
   get productPrice() {
     return $(".product-info-price span.price");
